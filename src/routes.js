@@ -26,7 +26,8 @@ routes.post('/login', validacaoUser.validateLogin, UserFimController.login);
 routes.put('/userfim/:id', auth, UserFimController.update);
 //Rotas Solicitação dos usuários
 
-routes.post('/solicitar', SolicitacaoController.store);
+routes.post('/solicitar', auth, SolicitacaoController.store);
+routes.get('/solicitar', auth, SolicitacaoController.list);
 
 
 module.exports = routes;

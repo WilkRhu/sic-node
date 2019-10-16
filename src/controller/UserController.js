@@ -72,14 +72,14 @@ const login = async (req, res) => {
     }
     try {
 
-        const user = await UserFim.findOne({ email }).select(['tipo', 'password', 'nome', 'email']);
+        const user = await UserFim.findOne({ email }).select(['password', 'nome', 'email', 'sexo']);
         if (!user) {
             return res.status(404).json({ err: "Usuário não encontrado ou não consta em nossa base de dados" });
         }
         const pass_ok = await bcrypt.compare(password, user.password);
         if (!pass_ok) return res.status(401).json({ err: 'Usuário e/ou senha inválidos' });
         user.password = undefined;
-        return res.status(200).json({ user, token: createUserToken(user.id) });
+        return res.status(200).json({ user, token: createUserToken(user) });
 
     } catch (err) {
         return res.status(401).json({ error: 'Não autorizado' });
