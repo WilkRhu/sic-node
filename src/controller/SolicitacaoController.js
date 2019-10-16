@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 const list = async (req, res) => {
     try {
         const userId = jwt.decode(req.headers.auth);
-        const solicitacao = await Solicitacao.find({ userId.id._id }).exec();
-        console.log(solicitacao);
-        if (solicitacao) {
+        let id = userId.id._id;
+        const solicitacao = await Solicitacao.find({ user_id: id }).exec();
+        if (solicitacao.length == 0) {
             return res.status(404).json("Não consta solicitações para o usuário informado!")
         }
         return res.status(200).json(solicitacao);

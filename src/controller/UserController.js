@@ -33,7 +33,7 @@ const store = async (req, res) => {
         }
         const user = await UserFim.create(req.body);
         user.password = undefined;
-        return res.status(200).json(user);
+        return res.status(200).json({ user, token: createUserToken(user.id) });
 
     } catch (err) {
         return res.status(400).json({ err: 'Erro, usuário não cadastrado' });
